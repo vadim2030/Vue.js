@@ -1,4 +1,3 @@
-
 import { defineStore } from "pinia";
 
 export const useRootStore = defineStore('root', {
@@ -10,10 +9,13 @@ export const useRootStore = defineStore('root', {
   },
   actions: {
     addPost(post) {
-      this.data.push(post)
-    }
-  },
-  removeItem(post) {
-    this.postItems = post;
-  },
+      this.postItems.push(post)
+    },
+    setPost(post) {
+      this.postItems = post;
+    },
+    removeItem(post) {
+      this.postItems = post;
+    },
+  }
 });

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRootStore } from '@/stores/root';
-const { addPost } = useRootStore();
+const { addPost, setPost } = useRootStore();
 const root = useRootStore();
 
 
@@ -11,11 +11,9 @@ async function fetchData() {
     const posts = await fetch('https://dummyjson.com/posts')
       .then((res) => res.json())
       .then((res) => res.posts);
-    root.setPosts(posts);
+    setPost(posts);
   }
-  catch (e) {
-    console.error(e);
-  }
+  catch { }
 }
 fetchData();
 
@@ -25,17 +23,16 @@ function submitPost() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      title: this.dataObj.title,
-      body: this.dataObj.body,
+      title: postTitle.value,
+      // body: this.dataObj.body,
       userId: 5,
-    })
-      .then(res => res.json())
-      .then((res) => {
-        root.addPost(res);
-        postTitle.value = null
-      })
-
+    }),
   })
+    .then((res) => res.json())
+    .then((res) => {
+      addPost(res);
+      postTitle.value = null
+    });
 }
 </script>
 
@@ -50,27 +47,23 @@ function submitPost() {
       <img src='../public/spisok.jpg' />
     </div>
     <div class="">
-      <div class="">
-        <div class="">
-          <label for="title">Заголовок</label>
-          <input type="text" id="title" value="title" v-on:input="inputTitle" class="border border-black m-2"
-            v-model="dataObj.title" />
-        </div>
-        <div class="">
-          <label for="body">Содержание</label>
-          <textarea rows="5" type="text" id="body" value="body" v-on:input="inputText" class="border border-black m-2"
-            v-model="dataObj.body" />
-        </div>
-      </div>
-      <button type="submit"
-        class=" bg-purple-500  bg-opacity-60 block mx-auto py-2 px-14 rounded-xl hover:bg-opacity-100 transition-all"
-        @submit.prevent="submitPost">
-        Добавить пост
-      </button>
+      <label for="title">Заголовок</label>
+      <input type="text" id="title" value="" v-on:input="inputTitle" class="border border-black m-2"
+        v-model="postTitle" />
     </div>
+    <!-- <div class=""> -->
+    <!-- <label for="body">Содержание</label>
+      <textarea rows="5" type="text" id="body" value="" v-on:input="inputText" class="border border-black m-2"
+        v-model="dataObj.body" />
+    </div> -->
+    <button type="submit"
+      class=" bg-purple-500  bg-opacity-60 block mx-auto py-2 px-14 rounded-xl hover:bg-opacity-100 transition-all"
+      @submit.prevent="submitPost">
+      Добавить пост
+    </button>
     <div>
-      <li v-for="postItems in root.items" :key="postItems">
-        {{ postItems.title }}
+      <li v-for="post in root.items">
+        {{ post.title }}
       </li>
     </div>
   </div>
@@ -78,43 +71,43 @@ function submitPost() {
 
 <script>
 
-
 export default {
   name: "Modal",
   data: function () {
     return {
-      dataObj: {
-        title: '',
-        body: ''
+      postItems: {
+        title: ''
+        // body: ''
       }
     }
   },
   methods: {
     handleSave() {
-      console.log(this.dataObj);
+      console.log(this.postItems);
       this.handleClose();
     },
     handleClose() {
-      this.$emit(' close');
+      this.$emit('close');
     }, inputTitle(event) {
       console.log('event.target.value---', event.target.value)
       this.inputOne = event.target.value
     }, inputText(event) {
       console.log('event.target.value+++', event.target.value)
       this.inputTwo = event.target.value
-    }, submit() {
-      fetch('https://dummyjson.com/posts/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-          title: this.dataObj.title, body:
-            this.dataObj.body, userId: 5,
-        })
-      }).then(res => res.json())
-        .then((res) => {
-          addPost(res)
-        }
-        ).then(console.log)
     },
+    //  submit() {
+    //   fetch('https://dummyjson.com/posts/add', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+    //       title: this.dataObj.title, body:
+    //         this.dataObj.body, userId: 5,
+    //     })
+    //   }).then(res => res.json())
+    //     .then((res) => {
+    //       addPost(res)
+    //     }
+    //     ).then(console.log)
+    // },
   }
 }
 </script>
