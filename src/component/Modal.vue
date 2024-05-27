@@ -17,7 +17,7 @@ async function fetchData() {
   }
   catch { }
 }
-// fetchData();
+fetchData();
 
 function submitPost() {
   if (!postTitle.value) return;
@@ -40,7 +40,7 @@ function submitPost() {
 </script>
 
 <template>
-  <form @submit.prevent="submitPost" class="mt-10 block border border-purple-500 rounded-lg ">
+  <form @submit.prevent="submitPost" class="mt-12 block border border-purple-500 rounded-lg w-2/5 ">
     <button
       class=" mt-1 mr-2 bg-red-600 bg-opacity-80 block mx-auto py-2 px-3 rounded-xl hover:bg-opacity-100 transition-all"
       @click="handleClose">
