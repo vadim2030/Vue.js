@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRootStore } from '@/stores/root';
 const { addPost, setPost } = useRootStore();
-const root = useRootStore();
+// const root = useRootStore();
 
 
 const postTitle = ref(null);

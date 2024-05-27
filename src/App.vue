@@ -18,9 +18,7 @@ import PostList from "@/component/PostList.vue"
       <transition name="modal">
         <div class="" v-if="showModal">
           <Modal @close="closeModal" />
-
         </div>
-
       </transition>
     </div>
     <div class="flex justify-end w-25">
