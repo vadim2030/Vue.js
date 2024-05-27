@@ -78,10 +78,10 @@ export default {
       this.$emit('close');
     }, inputTitle(event) {
       console.log('event.target.value---', event.target.value)
-      this.inputOne = event.target.value
+      this.inputTitle = event.target.value
     }, inputText(event) {
       console.log('event.target.value+++', event.target.value)
-      this.inputTwo = event.target.value
+      this.inputText = event.target.value
     },
   }
 }
