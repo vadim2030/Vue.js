@@ -15,7 +15,9 @@ async function fetchData() {
     setPost(posts);
 
   }
-  catch { }
+  catch (e) {
+    console.log(e)
+  }
 }
 fetchData();
 

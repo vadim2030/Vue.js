@@ -22,5 +22,8 @@ export const useRootStore = defineStore('root', {
     setComment(comment) {
       this.commentItems = comment;
     },
+    setCommentId(comentId) {
+      this.commentItems = comentId;
+    }
   }
 });

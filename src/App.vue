@@ -29,7 +29,7 @@ import PostList from "@/component/PostList.vue"
 
 <script>
 export default {
-  name: "MyIndex",
+  name: "App",
   components: { Modal },
   data: function () {
     return {
