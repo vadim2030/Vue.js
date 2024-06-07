@@ -7,7 +7,7 @@ export const useRootStore = defineStore('root', {
   }),
   getters: {
     items: (state) => state.postItems,
-    itemsComment: (state) => state.commentItems
+    itemsComment: (state) => state.commentItems,
   },
   actions: {
     addPost(post) {
@@ -19,11 +19,5 @@ export const useRootStore = defineStore('root', {
     addComment(comment) {
       this.commentItems.push(comment);
     },
-    setComment(comment) {
-      this.commentItems = comment;
-    },
-    setCommentId(comentId) {
-      this.commentItems = comentId;
-    }
   }
 });

@@ -11,7 +11,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  rules: {
-
+  Option: {
+    "vue/no-reserved-component-names": ["error", {
+      "disallowVueBuiltInComponents": false,
+      "disallowVue3BuiltInComponents": false
+    }]
   }
 }

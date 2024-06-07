@@ -1,23 +1,18 @@
 <script setup>
 import { ref } from 'vue';
-// import Comment from '@/component/Comment.vue';
 import { useRootStore } from '@/stores/root';
-const { setCommentId, addComment } = useRootStore();
-const root = useRootStore();
+import { defineProps } from 'vue';
+
+const { addComment } = useRootStore();
+const props = defineProps(['comment']);
+const commentPost = props.comment;
 
 const postComment = ref(null);
 const postName = ref(null);
 
-async function submitCommentId(id) {
-  try {
-    const comment = await fetch('https://dummyjson.com/comments/post/id')
-      .then((res) => res.json())
-      .then((res) => res.comment)
-    setCommentId(comment);
-  }
-  catch (e) {
-    console.log(e)
-  }
+
+const addCommentNew = () => {
+  commentPost.push({ title: postName.value, body: postComment.value })
 }
 
 function submitComment() {
@@ -38,26 +33,26 @@ function submitComment() {
       postComment.value = null;
     });
 }
+
 </script>
 
 <template>
   <form @submit.prevent="submitComment">
     <div>Комментарии</div>
-    <div class="">
+    <div>
       <label class=" ml-10" for=" title">Имя пользователя</label>
-      <input type="text" id="name" value="" v-on:input="inputName"
+      <input type="text" maxlength="100" placeholder="Введите ваше Имя" id="name" value="" v-on:input="inputName"
         class=" block border border-black ml-10 m-2 w-4/5 h-8" v-model="postName" />
     </div>
-    <div class="">
+    <div>
       <label class=" ml-10" for=" title">Комментарий</label>
-      <input type="text" id="comment" value="" v-on:input="inputComment"
-        class=" block border border-black ml-10 m-2 w-4/5 h-8" v-model="postComment" />
+      <input type="text" maxlength="500" placeholder="Напишите комментарий" id="comment" value=""
+        v-on:input="inputComment" class=" block border border-black ml-10 m-2 w-4/5 h-8" v-model="postComment" />
     </div>
-    <button
+    <button @click="addCommentNew"
       class="mt-3 bg-purple-500  bg-opacity-60 block mx-auto py-2 px-8 rounded-xl hover:bg-opacity-100 transition-all">
       Написать комментарий</button>
-    <form @submit.prevent="submitCommentId" v-for="comment in root.itemsComment"
-      class="border border-purple-500 rounded-lg  m-1 p-1">
+    <div v-for="comment in commentPost" :key="comment" class="border border-purple-500 rounded-lg  m-1 p-1">
       <div>
         <div class="flex w-8 h-8">
           <img src='../public/user.jpg' />
@@ -65,27 +60,24 @@ function submitComment() {
         </div>
         {{ comment.body }}
       </div>
-    </form>
+    </div>
   </form>
+
 
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      post: [{ title }]
-    }
-  },
   name: "PostList",
   methods: {
     inputComment(event) {
-      console.log('event.target.value---', event.target.value)
       this.inputComment = event.target.value
     },
     inputName(event) {
-      console.log('event.target.value---', event.target.value)
       this.inputName = event.target.value
+    },
+    onClick(event) {
+      this.onClick = event.target.id
     }
   }
 }
