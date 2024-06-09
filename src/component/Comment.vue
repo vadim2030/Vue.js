@@ -5,14 +5,13 @@ import { defineProps } from 'vue';
 
 const { addComment } = useRootStore();
 const props = defineProps(['comment']);
-const commentPost = props.comment;
-
+const commentStore = props.comment;
 const postComment = ref(null);
 const postName = ref(null);
 
 
 const addCommentNew = () => {
-  commentPost.push({ title: postName.value, body: postComment.value })
+  commentStore.push({ title: postName.value, body: postComment.value });
 }
 
 function submitComment() {
@@ -52,7 +51,7 @@ function submitComment() {
     <button @click="addCommentNew"
       class="mt-3 bg-purple-500  bg-opacity-60 block mx-auto py-2 px-8 rounded-xl hover:bg-opacity-100 transition-all">
       Написать комментарий</button>
-    <div v-for="comment in commentPost" :key="comment" class="border border-purple-500 rounded-lg  m-1 p-1">
+    <div v-for="comment in commentStore" :key="comment" class="border border-purple-500 rounded-lg  m-1 p-1">
       <div>
         <div class="flex w-8 h-8">
           <img src='../public/user.jpg' />
